@@ -1,0 +1,40 @@
+﻿<Window x:Class="Reminder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Reminder"
+        mc:Ignorable="d"
+        Title="Reminder v0.1 | by Mullins182" Height="800" Width="600" WindowStartupLocation="CenterScreen" WindowState="Normal" 
+        WindowStyle="SingleBorderWindow" Background="Black">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="PrgLabel" Width="300px" Height="auto" Background="Transparent" Foreground="DarkGoldenrod" FontSize="60px"
+               Grid.Column="1" Grid.Row="0" Content="REMINDER" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Grid x:Name="OptionsGrid" Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="60*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Button x:Name="Btn_Quit" Height="40px" Width="200px" Background="red" Content="Quit Programm" Grid.Column="1" Grid.Row="2"
+                HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25px" FontWeight="Bold" Click="Btn_Quit_Click"/>
+    </Grid>
+</Window>
