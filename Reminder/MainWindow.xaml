@@ -45,8 +45,8 @@
                     Foreground="Gold" Content="[X]" FontSize="27" FontFamily="{StaticResource BradleyHandITC}" Padding="5px" Click="Btn_StartReminder_Click"
                     Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
-            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="1" Background="#33FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26px"
-                     Foreground="DarkGoldenrod" Padding="10px" TextWrapping="Wrap" Cursor="Hand"/>
+            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="1" Background="#10FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26px"
+                     Foreground="DarkGoldenrod" Padding="10px" TextWrapping="Wrap" Cursor="Pen"/>
         </Grid>
 
         <Button x:Name="Btn_Quit" Height="40px" Width="250px" Background="Black" Content="Quit Programm" Grid.Column="1" Grid.Row="2"
