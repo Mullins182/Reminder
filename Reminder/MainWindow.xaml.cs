@@ -8,22 +8,54 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Windows.UI.Notifications;
 
 namespace Reminder
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+
+        public readonly DispatcherTimer Timer = new();
+        public static string notificationString = "";
+
         public MainWindow()
         {
             InitializeComponent();
+            Init();
         }
 
+        public void Init()
+        {
+            StartReminderTimer.Content = "Start\nReminding\nMe";
+
+            ReminderText.TextAlignment = TextAlignment.Center;
+            ReminderText.VerticalContentAlignment = VerticalAlignment.Center;
+            ReminderText.AcceptsReturn = true;
+
+            Timer.Interval = TimeSpan.FromSeconds(10);
+            Timer.Tick += Notification_Tick;
+        }
+
+        private void Notification_Tick(object? sender, EventArgs e)
+        {
+            AlertWindow Notification = new();
+
+            Notification.Show();
+
+            Timer.Stop();
+        }
+
+        // Button Click-Eventhandler
         private void Btn_Quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void StartReminderTimer_Click(object sender, RoutedEventArgs e)
+        {
+            Timer.Start();
+            notificationString = ReminderText.Text;
         }
     }
 }
