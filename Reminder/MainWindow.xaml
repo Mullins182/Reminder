@@ -32,6 +32,12 @@
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
+
+            <Button x:Name="StartReminderTimer" Grid.Column="0" Grid.Row="1" Width="120px" Height="120px" Background="#1F0000"
+                    Foreground="Gold" Content="Start" FontSize="20" Padding="5px" Click="StartReminderTimer_Click"/>
+            
+            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="1" Background="DarkRed" FontFamily="Arial" FontSize="20px"
+                     Foreground="White" Padding="10px" TextWrapping="Wrap"/>
         </Grid>
 
         <Button x:Name="Btn_Quit" Height="40px" Width="200px" Background="red" Content="Quit Programm" Grid.Column="1" Grid.Row="2"
