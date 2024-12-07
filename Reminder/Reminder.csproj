@@ -10,7 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Bradley Hand ITC.ttf" />
+    <None Remove="Fonts\Curlz MT.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="bell.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Bradley Hand ITC.ttf" />
+    <Resource Include="Fonts\Curlz MT.ttf" />
   </ItemGroup>
 
 </Project>

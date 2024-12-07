@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="AlertWindow" Height="500" Width="500" WindowStartupLocation="CenterScreen" WindowState="Normal" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Templates/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -15,10 +22,12 @@
             <RowDefinition Height="90*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="MessageBox" Background="#20FF0000" FontFamily="Copperplate Gothic Light" FontSize="35px" Foreground="Goldenrod"
-                 TextWrapping="Wrap" TextAlignment="Center" Padding="25px" BorderBrush="#AAFF0000" Grid.Column="0" Grid.Row="0"/>
+        <TextBox x:Name="MessageBox" Background="#20FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="45px" Foreground="Goldenrod"
+                 TextWrapping="Wrap" TextAlignment="Center" Padding="15px" BorderBrush="#AAFF0000" Grid.Column="0" Grid.Row="0"
+                 Cursor="Hand"/>
         
-        <Button x:Name="CloseMessage" Width="150px" Height="50px" Background="Black" Foreground="Gold" Content="Close Message" FontSize="20px"
-                Grid.Column="0" Grid.Row="1" Click="CloseMessage_Click"/>
+        <Button x:Name="CloseMessage" Width="175px" Height="50px" Background="Black" Foreground="Gold" Content="Close Message" FontSize="25px"
+                Grid.Column="0" Grid.Row="1" Click="CloseMessage_Click" Template="{StaticResource NoMouseOverButtonTemplate}"
+                FontFamily="{StaticResource BradleyHandITC}"/>
     </Grid>
 </Window>

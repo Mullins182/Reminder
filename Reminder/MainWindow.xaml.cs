@@ -16,18 +16,18 @@ namespace Reminder
     public partial class MainWindow : Window
     {
 
-        public readonly DispatcherTimer Timer = new();
+        private readonly DispatcherTimer Timer = new();
         public static string notificationString = "";
 
         public MainWindow()
         {
             InitializeComponent();
-            Init();
+            Initialize();
         }
 
-        public void Init()
+        public void Initialize()
         {
-            StartReminderTimer.Content = "Start\nReminding\nMe";
+            StartReminderTimer.Content = "Start\nTimer";
 
             ReminderText.TextAlignment = TextAlignment.Center;
             ReminderText.VerticalContentAlignment = VerticalAlignment.Center;

@@ -4,6 +4,56 @@
              xmlns:local="clr-namespace:Reminder"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="BradleyHandITC">pack://application:,,,/Fonts/#Bradley Hand ITC</FontFamily>
+        <FontFamily x:Key="CurlzMT">pack://application:,,,/Fonts/#Curlz MT</FontFamily>
+        
+        <Style TargetType="Slider">
+            <Setter Property="TickPlacement" Value="None"/>
+            <Setter Property="TickFrequency" Value="1"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value >
+                    <ControlTemplate x:Name="NoHighlightSliderControlTemplate" TargetType="Slider">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="50*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+                            <Border Background="{TemplateBinding Background}" VerticalAlignment="Center" />
+                            <Track Name="PART_Track" Grid.Row="1">
+
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Background="Tan" Height="10">
+                                        <RepeatButton.Template>
+                                            <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                <Grid Background="{TemplateBinding Background}"/>
+                                            </ControlTemplate>
+                                        </RepeatButton.Template>
+                                    </RepeatButton>
+                                </Track.DecreaseRepeatButton>
+
+                                <Track.Thumb>
+                                    <Thumb Background="DarkRed" Height="25" Width="20" BorderBrush="Black"/>
+                                </Track.Thumb>
+
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Background="Tan" Height="10">
+                                        <RepeatButton.Template>
+                                            <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                <Grid Background="{TemplateBinding Background}"/>
+                                            </ControlTemplate>
+                                        </RepeatButton.Template>
+                                    </RepeatButton>
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                            <!--Changing the 'Grid.Row' of the Tickbar changes the position (for expl. 'Top', 'Bottom'). With Margin and VerticalALignment
+                            the Position can be fine-tuned-->
+                            <!--<TickBar Fill="LightGoldenrodYellow" Grid.Row="2" Grid.RowSpan="0" Height="10" Margin="0,0,0,0" VerticalAlignment="Top"/>-->
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

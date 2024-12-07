@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="Reminder v0.1 | by Mullins182" Height="800" Width="600" WindowStartupLocation="CenterScreen" WindowState="Normal" 
         WindowStyle="SingleBorderWindow" Background="Black">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Templates/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
@@ -20,7 +27,8 @@
         </Grid.RowDefinitions>
 
         <Label x:Name="PrgLabel" Width="300px" Height="auto" Background="Transparent" Foreground="DarkGoldenrod" FontSize="60px"
-               Grid.Column="1" Grid.Row="0" Content="REMINDER" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+               Grid.Column="1" Grid.Row="0" Content="REMINDER" HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontFamily="{StaticResource CurlzMT}"/>
 
         <Grid x:Name="OptionsGrid" Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -29,18 +37,21 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="80*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
 
             <Button x:Name="StartReminderTimer" Grid.Column="0" Grid.Row="1" Width="120px" Height="120px" Background="#1F0000"
-                    Foreground="Gold" Content="Start" FontSize="20" Padding="5px" Click="StartReminderTimer_Click"/>
-            
-            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="1" Background="DarkRed" FontFamily="Arial" FontSize="20px"
-                     Foreground="White" Padding="10px" TextWrapping="Wrap"/>
+                    Foreground="Gold" Content="[X]" FontSize="27" FontFamily="{StaticResource BradleyHandITC}" Padding="5px" Click="StartReminderTimer_Click"
+                    Template="{StaticResource NoMouseOverButtonTemplate}"/>
+
+            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="1" Background="#33FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26px"
+                     Foreground="DarkGoldenrod" Padding="10px" TextWrapping="Wrap" Cursor="Hand"/>
         </Grid>
 
-        <Button x:Name="Btn_Quit" Height="40px" Width="200px" Background="red" Content="Quit Programm" Grid.Column="1" Grid.Row="2"
-                HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25px" FontWeight="Bold" Click="Btn_Quit_Click"/>
+        <Button x:Name="Btn_Quit" Height="40px" Width="250px" Background="Black" Content="Quit Programm" Grid.Column="1" Grid.Row="2"
+                HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30px" FontWeight="Bold" Click="Btn_Quit_Click"
+                Template="{StaticResource NoMouseOverButtonTemplate}" Foreground="Gold" FontFamily="{StaticResource BradleyHandITC}"
+                />
     </Grid>
 </Window>
