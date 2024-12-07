@@ -41,8 +41,8 @@
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="StartReminderTimer" Grid.Column="0" Grid.Row="1" Width="120px" Height="120px" Background="#1F0000"
-                    Foreground="Gold" Content="[X]" FontSize="27" FontFamily="{StaticResource BradleyHandITC}" Padding="5px" Click="StartReminderTimer_Click"
+            <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="1" Width="120px" Height="120px" Background="#1F0000"
+                    Foreground="Gold" Content="[X]" FontSize="27" FontFamily="{StaticResource BradleyHandITC}" Padding="5px" Click="Btn_StartReminder_Click"
                     Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
             <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="1" Background="#33FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26px"
@@ -50,7 +50,7 @@
         </Grid>
 
         <Button x:Name="Btn_Quit" Height="40px" Width="250px" Background="Black" Content="Quit Programm" Grid.Column="1" Grid.Row="2"
-                HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30px" FontWeight="Bold" Click="Btn_Quit_Click"
+                HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30px" FontWeight="Normal" Click="Btn_Quit_Click"
                 Template="{StaticResource NoMouseOverButtonTemplate}" Foreground="Gold" FontFamily="{StaticResource BradleyHandITC}"
                 />
     </Grid>

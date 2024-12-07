@@ -27,7 +27,7 @@ namespace Reminder
 
         public void Initialize()
         {
-            StartReminderTimer.Content = "Start\nTimer";
+            Btn_StartReminder.Content = "Start\nTimer";
 
             ReminderText.TextAlignment = TextAlignment.Center;
             ReminderText.VerticalContentAlignment = VerticalAlignment.Center;
@@ -52,7 +52,7 @@ namespace Reminder
             Application.Current.Shutdown();
         }
 
-        private void StartReminderTimer_Click(object sender, RoutedEventArgs e)
+        private void Btn_StartReminder_Click(object sender, RoutedEventArgs e)
         {
             Timer.Start();
             notificationString = ReminderText.Text;

@@ -22,9 +22,9 @@
             <RowDefinition Height="90*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="MessageBox" Background="#20FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="45px" Foreground="Goldenrod"
-                 TextWrapping="Wrap" TextAlignment="Center" Padding="15px" BorderBrush="#AAFF0000" Grid.Column="0" Grid.Row="0"
-                 Cursor="Hand"/>
+        <TextBox x:Name="MessageBox" Background="#BB000000" FontFamily="{StaticResource BradleyHandITC}" FontSize="45px" Foreground="Gold"
+                 TextWrapping="Wrap" TextAlignment="Center" Padding="15px" BorderBrush="Red" Grid.Column="0" Grid.Row="0" FontWeight="Bold"
+                 Cursor="Hand" BorderThickness="0.5px"/>
         
         <Button x:Name="CloseMessage" Width="175px" Height="50px" Background="Black" Foreground="Gold" Content="Close Message" FontSize="25px"
                 Grid.Column="0" Grid.Row="1" Click="CloseMessage_Click" Template="{StaticResource NoMouseOverButtonTemplate}"
