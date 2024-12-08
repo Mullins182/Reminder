@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <DropShadowEffect x:Key="ButtonShadows" Color="Gold" BlurRadius="13" Direction="300" Opacity="0.55" RenderingBias="Quality" ShadowDepth="10"/>
-    <DropShadowEffect x:Key="TextboxShadows" Color="Black" BlurRadius="8" Direction="300" Opacity="0.9" RenderingBias="Quality" ShadowDepth="20"/>
+    <DropShadowEffect x:Key="TextboxShadows" Color="Goldenrod" BlurRadius="11" Direction="300" Opacity="0.45" RenderingBias="Quality" ShadowDepth="20"/>
     <DropShadowEffect x:Key="StandardShadows" Color="Black" BlurRadius="10" Direction="300" Opacity="0.75" RenderingBias="Quality" ShadowDepth="20"/>
 
     <Style x:Key="MyButtons" TargetType="Button">
@@ -19,7 +19,7 @@
     </Style>
 
     <Style x:Key="RemindMeBtn" TargetType="Button">
-        <Setter Property="Effect" Value="{StaticResource StandardShadows}"/>
+        <Setter Property="Effect" Value="{StaticResource ButtonShadows}"/>
         <Setter Property="Height" Value="95"/>
         <Setter Property="Width" Value="95"/>
         <Setter Property="FontFamily" Value="{StaticResource BradleyHandITC}"/>

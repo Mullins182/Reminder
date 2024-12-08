@@ -24,7 +24,7 @@
                             <Track Name="PART_Track" Grid.Row="1">
 
                                 <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Background="Tan" Height="10">
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Background="#A0FF0000" Height="10">
                                         <RepeatButton.Template>
                                             <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                 <Grid Background="{TemplateBinding Background}"/>
@@ -34,11 +34,11 @@
                                 </Track.DecreaseRepeatButton>
 
                                 <Track.Thumb>
-                                    <Thumb Background="DarkRed" Height="25" Width="20" BorderBrush="Black"/>
+                                    <Thumb Background="DarkRed" Height="35" Width="20" BorderThickness="2" BorderBrush="DarkRed"/>
                                 </Track.Thumb>
 
                                 <Track.IncreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Background="Tan" Height="10">
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Background="#33FF0000" Height="10">
                                         <RepeatButton.Template>
                                             <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                 <Grid Background="{TemplateBinding Background}"/>

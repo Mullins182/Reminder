@@ -18,6 +18,7 @@ namespace Reminder
 
         private readonly DispatcherTimer Timer = new();
         private static readonly string stdReminderText = "Enter Your Notification Message !";
+        private int setTimerValue = 1;
 
 
         public MainWindow()
@@ -34,7 +35,7 @@ namespace Reminder
 
             Btn_StartReminder.Content = "Start\nTimer";
             Btn_ClearBox.Content = "Clear\nMessage\nBox";
-            Tb_SetTime.Text = $"Notify me after\n[ {Sld_SetTime.Value} ]\nMinutes";
+            Tb_SetTime.Text = $"Notify me after\n[ {setTimerValue} ]\nMinutes";
 
             ReminderText.CaretBrush = new SolidColorBrush(Colors.Transparent);
             ReminderText.IsReadOnly = true;
@@ -44,8 +45,13 @@ namespace Reminder
             ReminderText.AcceptsReturn = true;
             ReminderText.Focus();
 
-            Timer.Interval = TimeSpan.FromSeconds(4);
+            Timer.Interval = TimeSpan.FromMinutes(1);
             Timer.Tick += Notification_Tick;
+        }
+
+        private void UpdateShowSelectedTimeTextbox()
+        {
+            Tb_SetTime.Text = $"Notify me after\n[ {setTimerValue} ]\nMinutes";
         }
 
         private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
@@ -91,6 +97,7 @@ namespace Reminder
         {
             if (CheckReminderText())
             {
+                Timer.Interval = TimeSpan.FromMinutes(setTimerValue);
                 Timer.Start();
             }
         }
@@ -103,7 +110,22 @@ namespace Reminder
 
         private void Sld_SetTime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Tb_SetTime.Text = $"Notify me after\n[ {Sld_SetTime.Value} ]\nMinutes";
+            setTimerValue = (int)Sld_SetTime.Value;
+            UpdateShowSelectedTimeTextbox();
+        }
+
+        private void Btn_IncreaseTime_Click(object sender, RoutedEventArgs e)
+        {
+            setTimerValue = setTimerValue < 5 ? setTimerValue = 5 : setTimerValue += 5;
+            Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
+            UpdateShowSelectedTimeTextbox();
+        }
+
+        private void Btn_DecreaseTime_Click(object sender, RoutedEventArgs e)
+        {
+            setTimerValue = setTimerValue > 4 ? setTimerValue -= 5 : setTimerValue = 0;
+            Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
+            UpdateShowSelectedTimeTextbox();
         }
     }
 }
