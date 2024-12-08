@@ -28,7 +28,7 @@
         <Setter Property="BorderBrush" Value="DarkGoldenrod"/>
         <Setter Property="BorderThickness" Value="1,1,2,2"/>
         <Setter Property="Foreground" Value="Goldenrod"/>
-        <Setter Property="Background" Value="#50FF0000"/>
+        <Setter Property="Background" Value="#10FF0000"/>
     </Style>
 
     <!-- Control Template Override für Buttons um Highlighting bei Mouseover zu verhindern !-->

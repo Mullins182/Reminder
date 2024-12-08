@@ -44,6 +44,15 @@
             <Button x:Name="Btn_ClearBox" Grid.Column="0" Grid.Row="0" Content="[ X ]" FontSize="22" Click="Btn_ClearBox_Click"
                     Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"/>
 
+            <StackPanel x:Name="Sp_Controls" Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom" Background="Transparent">
+                <TextBox x:Name="Tb_SetTime" Width="180" Height="100" Background="#10FF0000"
+                       Margin="0, 0, 0, 15" FontSize="24" FontWeight="Normal" Foreground="DarkGoldenrod" TextWrapping="Wrap"
+                       HorizontalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource BradleyHandITC}"
+                         Effect="{StaticResource TextboxShadows}" BorderBrush="DarkGoldenrod" Padding="5"/>
+                <Slider x:Name="Sld_SetTime" Width="180" Height="50" Maximum="60" Minimum="1" Value="1" TickFrequency="1" 
+                        IsSnapToTickEnabled="True" ValueChanged="Sld_SetTime_ValueChanged"/>
+            </StackPanel>
+
             <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="2" Content="[ X ]" FontSize="27" Click="Btn_StartReminder_Click"
                     Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"/>
 

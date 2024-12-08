@@ -34,6 +34,7 @@ namespace Reminder
 
             Btn_StartReminder.Content = "Start\nTimer";
             Btn_ClearBox.Content = "Clear\nMessage\nBox";
+            Tb_SetTime.Text = $"Notify me after\n[ {Sld_SetTime.Value} ]\nMinutes";
 
             ReminderText.CaretBrush = new SolidColorBrush(Colors.Transparent);
             ReminderText.IsReadOnly = true;
@@ -80,7 +81,7 @@ namespace Reminder
             return ReminderText.Text == stdReminderText ? false : true;
         }
 
-        // Button Click-Eventhandler
+        // Button/Slider Eventhandler
         private void Btn_Quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -98,6 +99,11 @@ namespace Reminder
         {
             ReminderText.Clear();
             ReminderText.Text = stdReminderText;
+        }
+
+        private void Sld_SetTime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Tb_SetTime.Text = $"Notify me after\n[ {Sld_SetTime.Value} ]\nMinutes";
         }
     }
 }
