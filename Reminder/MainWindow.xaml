@@ -42,7 +42,8 @@
             </Grid.RowDefinitions>
 
             <Button x:Name="Btn_ClearBox" Grid.Column="0" Grid.Row="0" Content="[ X ]" FontSize="22" Click="Btn_ClearBox_Click"
-                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"/>
+                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"
+                    MouseEnter="Btn_ClearBox_MouseEnter" MouseLeave="Btn_ClearBox_MouseLeave"/>
 
             <StackPanel x:Name="Sp_Controls" Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" Background="Transparent">
                 <TextBox x:Name="Tb_SetTime" Width="180" Height="100" Background="#0F0000"
@@ -53,14 +54,17 @@
                         IsSnapToTickEnabled="True" ValueChanged="Sld_SetTime_ValueChanged" Margin="0, 0, 0, 15"/>
                 <StackPanel x:Name="Sp_IncreaseDecreaseBtns" Orientation="Horizontal" Background="Transparent" HorizontalAlignment="Center">
                     <Button x:Name="Btn_IncreaseTime" Width="80" Height="40" Style="{StaticResource MyButtons}" Content="Time +" FontSize="20" 
-                            Margin="0, 0, 15, 0" Template="{StaticResource NoMouseOverButtonTemplate}" Click="Btn_IncreaseTime_Click"/>
+                            Margin="0, 0, 15, 0" Template="{StaticResource NoMouseOverButtonTemplate}" Click="Btn_IncreaseTime_Click"
+                            MouseEnter="Btn_IncreaseTime_MouseEnter" MouseLeave="Btn_IncreaseTime_MouseLeave"/>
                     <Button x:Name="Btn_DecreaseTime" Width="80" Height="40" Style="{StaticResource MyButtons}" Content="Time -" FontSize="20"
-                            Template="{StaticResource NoMouseOverButtonTemplate}" Click="Btn_DecreaseTime_Click"/>
+                            Template="{StaticResource NoMouseOverButtonTemplate}" Click="Btn_DecreaseTime_Click"
+                            MouseEnter="Btn_DecreaseTime_MouseEnter" MouseLeave="Btn_DecreaseTime_MouseLeave"/>
                 </StackPanel>
             </StackPanel>
 
-            <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="2" Content="[ X ]" FontSize="27" Click="Btn_StartReminder_Click"
-                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"/>
+            <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="2" Content="[ X ]" FontSize="22" Click="Btn_StartReminder_Click"
+                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"
+                    MouseEnter="Btn_StartReminder_MouseEnter" MouseLeave="Btn_StartReminder_MouseLeave"/>
 
             <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="#0F0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26"
                      Foreground="DarkGoldenrod" Padding="10" TextWrapping="Wrap" Cursor="Pen" BorderBrush="DarkGoldenrod" 
@@ -68,6 +72,6 @@
         </Grid>
 
         <Button x:Name="Btn_Quit" Grid.Column="1" Grid.Row="2" Click="Btn_Quit_Click" Template="{StaticResource NoMouseOverButtonTemplate}"
-                Style="{StaticResource MyButtons}" Content="EXIT"/>
+                Style="{StaticResource MyButtons}" Content="EXIT" MouseEnter="Btn_Quit_MouseEnter" MouseLeave="Btn_Quit_MouseLeave"/>
     </Grid>
 </Window>

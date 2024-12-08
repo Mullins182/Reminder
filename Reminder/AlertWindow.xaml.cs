@@ -80,5 +80,15 @@ namespace Reminder
         {
             this.Close();
         }
+
+        private void CloseMessage_MouseEnter(object sender, MouseEventArgs e)
+        {
+            CloseMessage.Foreground = new SolidColorBrush(Colors.GreenYellow);
+        }
+
+        private void CloseMessage_MouseLeave(object sender, MouseEventArgs e)
+        {
+            CloseMessage.Foreground = new SolidColorBrush(Colors.Red);
+        }
     }
 }

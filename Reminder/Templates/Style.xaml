@@ -10,7 +10,7 @@
         <Setter Property="Height" Value="60"/>
         <Setter Property="Width" Value="230"/>
         <Setter Property="FontFamily" Value="{StaticResource BradleyHandITC}"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="FontSize" Value="43"/>
         <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="BorderThickness" Value="1,1,2,2"/>

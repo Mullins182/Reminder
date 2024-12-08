@@ -18,7 +18,9 @@ namespace Reminder
 
         private readonly DispatcherTimer Timer = new();
         private static readonly string stdReminderText = "Enter Your Notification Message !";
+        private string notificationText = "";
         private int setTimerValue = 1;
+        private bool timerRunning = false;
 
 
         public MainWindow()
@@ -54,6 +56,23 @@ namespace Reminder
             Tb_SetTime.Text = $"Notify me after\n[ {setTimerValue} ]\nMinutes";
         }
 
+        private async void TimerStarted()
+        {
+            timerRunning = true;
+
+            notificationText = ReminderText.Text;
+
+            Btn_StartReminder.Content = "Timer\nRunning !";
+
+            for (int i = 30; i > 0; i--)
+            {
+                Btn_StartReminder.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+                await Task.Delay(50);
+                Btn_StartReminder.BorderBrush = new SolidColorBrush(Colors.Red);
+                await Task.Delay(50);
+            }
+        }
+
         private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
         {
             ReminderText.Focus();
@@ -73,11 +92,18 @@ namespace Reminder
             ReminderText.IsReadOnly = true;
         }
 
-        private void Notification_Tick(object? sender, EventArgs e)
+        private async void Notification_Tick(object? sender, EventArgs e)
         {
-            AlertWindow Notification = new(ReminderText.Text);
+            AlertWindow Notification = new(notificationText);
 
             Notification.Show();
+
+            await Task.Delay(2000);
+
+            Btn_StartReminder.Content = "Start\nTimer";
+            Btn_StartReminder.BorderBrush = new SolidColorBrush(Colors.DarkGoldenrod);
+
+            timerRunning = false;
 
             Timer.Stop();
         }
@@ -95,10 +121,11 @@ namespace Reminder
 
         private void Btn_StartReminder_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckReminderText())
+            if (CheckReminderText() && !timerRunning)
             {
                 Timer.Interval = TimeSpan.FromMinutes(setTimerValue);
                 Timer.Start();
+                TimerStarted();
             }
         }
 
@@ -123,9 +150,70 @@ namespace Reminder
 
         private void Btn_DecreaseTime_Click(object sender, RoutedEventArgs e)
         {
-            setTimerValue = setTimerValue > 4 ? setTimerValue -= 5 : setTimerValue = 0;
+            setTimerValue = setTimerValue > 4 ? setTimerValue -= 5 : setTimerValue = 5;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
             UpdateShowSelectedTimeTextbox();
+        }
+
+        // Mouse Enter/Leave Event Handler
+        private void Btn_ClearBox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Btn_ClearBox.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            Btn_ClearBox.Foreground = new SolidColorBrush(Colors.GreenYellow);
+        }
+
+        private void Btn_ClearBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Btn_ClearBox.BorderBrush = new SolidColorBrush(Colors.DarkGoldenrod);
+            Btn_ClearBox.Foreground = new SolidColorBrush(Colors.Goldenrod);
+        }
+
+        private void Btn_IncreaseTime_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Btn_IncreaseTime.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            Btn_IncreaseTime.Foreground = new SolidColorBrush(Colors.GreenYellow);
+        }
+
+        private void Btn_IncreaseTime_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Btn_IncreaseTime.BorderBrush = new SolidColorBrush(Colors.DarkGoldenrod);
+            Btn_IncreaseTime.Foreground = new SolidColorBrush(Colors.Goldenrod);
+        }
+
+        private void Btn_DecreaseTime_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Btn_DecreaseTime.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            Btn_DecreaseTime.Foreground = new SolidColorBrush(Colors.GreenYellow);
+        }
+
+        private void Btn_DecreaseTime_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Btn_DecreaseTime.BorderBrush = new SolidColorBrush(Colors.DarkGoldenrod);
+            Btn_DecreaseTime.Foreground = new SolidColorBrush(Colors.Goldenrod);
+        }
+
+        private void Btn_StartReminder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Btn_StartReminder.BorderBrush = timerRunning ? Btn_StartReminder.BorderBrush : new SolidColorBrush(Colors.GreenYellow);
+            Btn_StartReminder.Foreground = timerRunning ? Btn_StartReminder.Foreground : new SolidColorBrush(Colors.GreenYellow);
+        }
+
+        private void Btn_StartReminder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Btn_StartReminder.BorderBrush = timerRunning ? Btn_StartReminder.BorderBrush : new SolidColorBrush(Colors.DarkGoldenrod);
+            Btn_StartReminder.Foreground = timerRunning ? Btn_StartReminder.Foreground : new SolidColorBrush(Colors.Goldenrod);
+        }
+
+        private void Btn_Quit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Btn_Quit.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            Btn_Quit.Foreground = new SolidColorBrush(Colors.GreenYellow);
+        }
+
+        private void Btn_Quit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Btn_Quit.BorderBrush = new SolidColorBrush(Colors.DarkGoldenrod);
+            Btn_Quit.Foreground = new SolidColorBrush(Colors.Goldenrod);
         }
     }
 }
