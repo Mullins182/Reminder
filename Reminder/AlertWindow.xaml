@@ -7,18 +7,29 @@
         mc:Ignorable="d"
         Title="AlertWindow" Height="500" Width="500" WindowStartupLocation="CenterScreen" WindowState="Normal" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Templates/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition x:Name="BoxColumn" Width="470"/>
+            <ColumnDefinition Width="15"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="90*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="85*"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="MessageBox" Background="#20FF0000" FontFamily="Copperplate Gothic Light" FontSize="35px" Foreground="Goldenrod"
-                 TextWrapping="Wrap" TextAlignment="Center" Padding="25px" BorderBrush="#AAFF0000" Grid.Column="0" Grid.Row="0"/>
+        <TextBox x:Name="MessageBox" Background="#BB000000" FontFamily="{StaticResource BradleyHandITC}" FontSize="40" Foreground="Gold"
+                 TextWrapping="Wrap" TextAlignment="Center" Padding="10" BorderBrush="Red" Grid.Column="1" Grid.Row="0" FontWeight="Normal"
+                 Cursor="Hand" BorderThickness="0.5" Effect="{StaticResource StandardShadows}"/>
         
-        <Button x:Name="CloseMessage" Width="150px" Height="50px" Background="Black" Foreground="Gold" Content="Close Message" FontSize="20px"
-                Grid.Column="0" Grid.Row="1" Click="CloseMessage_Click"/>
+        <Button x:Name="CloseMessage" Width="175" Height="50" Background="Black" Foreground="Red" Content="Close Message" FontSize="25px"
+                Grid.Column="1" Grid.Row="1" Click="CloseMessage_Click" Template="{StaticResource NoMouseOverButtonTemplate}"
+                Style="{StaticResource MyButtons}" VerticalAlignment="Top" MouseEnter="CloseMessage_MouseEnter" MouseLeave="CloseMessage_MouseLeave"/>
     </Grid>
 </Window>
