@@ -36,15 +36,18 @@
                 <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="80*"/>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="1" Content="[X]" FontSize="27" Click="Btn_StartReminder_Click"
+            <Button x:Name="Btn_ClearBox" Grid.Column="0" Grid.Row="0" Content="[ X ]" FontSize="22" Click="Btn_ClearBox_Click"
                     Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"/>
 
-            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="1" Background="#10FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26"
+            <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="2" Content="[ X ]" FontSize="27" Click="Btn_StartReminder_Click"
+                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"/>
+
+            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="#10FF0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26"
                      Foreground="DarkGoldenrod" Padding="10" TextWrapping="Wrap" Cursor="Pen" BorderBrush="DarkGoldenrod" 
                      Effect="{StaticResource StandardShadows}"/>
         </Grid>

@@ -31,9 +31,9 @@ namespace Reminder
             this.GotFocus += MainWindow_GotFocus;
             ReminderText.MouseLeave += ReminderText_MouseLeave;
             ReminderText.MouseEnter += ReminderText_MouseEnter;
-            ReminderText.TextChanged += ReminderText_TextChanged;
 
             Btn_StartReminder.Content = "Start\nTimer";
+            Btn_ClearBox.Content = "Clear\nMessage\nBox";
 
             ReminderText.CaretBrush = new SolidColorBrush(Colors.Transparent);
             ReminderText.IsReadOnly = true;
@@ -50,11 +50,6 @@ namespace Reminder
         private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
         {
             ReminderText.Focus();
-        }
-
-        private void ReminderText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
         }
 
         private void ReminderText_MouseEnter(object sender, MouseEventArgs e)
@@ -97,6 +92,12 @@ namespace Reminder
             {
                 Timer.Start();
             }
+        }
+
+        private void Btn_ClearBox_Click(object sender, RoutedEventArgs e)
+        {
+            ReminderText.Clear();
+            ReminderText.Text = stdReminderText;
         }
     }
 }
