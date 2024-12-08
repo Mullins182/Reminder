@@ -18,27 +18,33 @@ namespace Reminder
 {
     public partial class AlertWindow : Window
     {
-
+        private readonly MediaPlayer openBox = new();
+        private readonly MediaPlayer notify = new();
         private readonly DoubleAnimation TextboxAnimation = new();
-        private bool animationFinished = false;
-        private int animationTimerMsec = 3000;
+        private readonly DoubleAnimation Btn_CloseMessageAnimation = new();
+        private readonly int animationTimerMsec = 650;
 
-        public AlertWindow(string notification)
+        public AlertWindow(string notificationMsg)
         {
             InitializeComponent();
-            Initialize(notification);
+            Initialize(notificationMsg);
         }
 
-        private async void Initialize(string notification)
+        private async void Initialize(string msg)
         {
+            openBox.Open(new Uri("sounds/raiseUp.mp3", UriKind.Relative));
+            notify.Open(new Uri("sounds/notify.mp3", UriKind.Relative));
 
-            CloseMessage.Visibility = Visibility.Collapsed;
+            CloseMessage.Opacity = 0.00;
 
             TextboxAnimation.Duration = TimeSpan.FromMilliseconds(animationTimerMsec);
             TextboxAnimation.From = 0;
-            TextboxAnimation.To = 500;
+            TextboxAnimation.To = BoxColumn.Width.Value;
 
-            MessageBox.Text = notification;
+            Btn_CloseMessageAnimation.Duration = TimeSpan.FromMilliseconds(animationTimerMsec);
+            Btn_CloseMessageAnimation.From = 0.00;
+            Btn_CloseMessageAnimation.To = 0.85;
+
             MessageBox.Width = 0;
             MessageBox.IsReadOnly = true;
             MessageBox.TextAlignment = TextAlignment.Center;
@@ -47,13 +53,25 @@ namespace Reminder
             this.Topmost = true;
 
             await StartTextboxAnimation();
+            MessageBox.Text = msg;
+            CloseMessage.BeginAnimation(OpacityProperty, Btn_CloseMessageAnimation);
+            await PlayNotifySound();
+            await PlayNotifySound();
+        }
 
-            CloseMessage.Visibility = Visibility.Visible;
+        private async Task<bool> PlayNotifySound()
+        {
+            notify.Position = TimeSpan.Zero;
+            notify.Play();
+            await Task.Delay(4000);
+            return true;
         }
 
         private async Task<bool> StartTextboxAnimation()
         {
             MessageBox.BeginAnimation(WidthProperty, TextboxAnimation);
+            openBox.Position = TimeSpan.Zero;
+            openBox.Play();
             await Task.Delay(animationTimerMsec);
             return true;
         }
