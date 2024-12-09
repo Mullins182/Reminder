@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Reminder"
         mc:Ignorable="d"
-        Title="Reminder beta v1.0 | by Mullins182" Height="900" Width="700" WindowStartupLocation="CenterScreen" WindowState="Normal" 
+        Title="Reminder beta v2.0 | by Mullins182" Height="900" Width="700" WindowStartupLocation="CenterScreen" WindowState="Normal" 
         WindowStyle="SingleBorderWindow" Background="#22F5132C" AllowsTransparency="False">
     <Window.Resources>
         <ResourceDictionary>
