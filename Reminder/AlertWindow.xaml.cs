@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Windows.UI.Composition;
@@ -22,7 +23,7 @@ namespace Reminder
         private readonly MediaPlayer notify = new();
         private readonly DoubleAnimation TextboxAnimation = new();
         private readonly DoubleAnimation Btn_CloseMessageAnimation = new();
-        private readonly int animationTimerMsec = 650;
+        private readonly int animationTimerMsec = 650; // Notify Window Animation
 
         public AlertWindow(string notificationMsg)
         {
@@ -84,11 +85,13 @@ namespace Reminder
         private void CloseMessage_MouseEnter(object sender, MouseEventArgs e)
         {
             CloseMessage.Foreground = new SolidColorBrush(Colors.GreenYellow);
+            CloseMessage.Effect = (DropShadowEffect)Resources["ButtonShadowsOnMouseOver"]; // Shadow Effekt aus ResourceDictionary "Style.xaml" laden
         }
 
         private void CloseMessage_MouseLeave(object sender, MouseEventArgs e)
         {
             CloseMessage.Foreground = new SolidColorBrush(Colors.Red);
+            CloseMessage.Effect = (DropShadowEffect)Resources["ButtonShadows"]; // Shadow Effekt aus ResourceDictionary "Style.xaml" laden
         }
     }
 }

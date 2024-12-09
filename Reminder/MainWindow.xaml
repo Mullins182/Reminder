@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Reminder"
         mc:Ignorable="d"
-        Title="Reminder beta v1.0 | by Mullins182" Height="900" Width="600" WindowStartupLocation="CenterScreen" WindowState="Normal" 
+        Title="Reminder beta v2.0 | by Mullins182" Height="900" Width="700" WindowStartupLocation="CenterScreen" WindowState="Normal" 
         WindowStyle="SingleBorderWindow" Background="#22F5132C" AllowsTransparency="False">
     <Window.Resources>
         <ResourceDictionary>
@@ -41,34 +41,38 @@
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="Btn_ClearBox" Grid.Column="0" Grid.Row="0" Content="[ X ]" FontSize="22" Click="Btn_ClearBox_Click"
-                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"
-                    MouseEnter="Btn_ClearBox_MouseEnter" MouseLeave="Btn_ClearBox_MouseLeave"/>
+            <Button x:Name="Btn_ClearBox" Grid.Column="0" Grid.Row="0" Click="Btn_ClearBox_Click"
+                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource MyButtons}" Width="100" Height="100" Padding="0"
+                    MouseEnter="Btn_ClearBox_MouseEnter" MouseLeave="Btn_ClearBox_MouseLeave" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <TextBlock x:Name="Tbl_ClearBox" Text="Clear&#x0a;Message&#x0a;Box" TextAlignment="Center" TextWrapping="Wrap"/> <!-- Textblock im Button für textalignment=center -->
+            </Button>
 
             <StackPanel x:Name="Sp_Controls" Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" Background="Transparent">
                 <TextBox x:Name="Tb_SetTime" Width="180" Height="100" Background="#0F0000"
-                       Margin="0, 0, 0, 15" FontSize="24" FontWeight="Normal" Foreground="DarkGoldenrod" TextWrapping="Wrap"
+                       Margin="0, 0, 0, 15" FontSize="24" FontWeight="Bold" Foreground="DarkGoldenrod" TextWrapping="Wrap"
                        HorizontalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource BradleyHandITC}"
                          Effect="{StaticResource ButtonShadows}" BorderBrush="DarkGoldenrod" Padding="5"/>
                 <Slider x:Name="Sld_SetTime" Width="180" Height="50" Maximum="60" Minimum="1" Value="1" TickFrequency="1" 
                         IsSnapToTickEnabled="True" ValueChanged="Sld_SetTime_ValueChanged" Margin="0, 0, 0, 15"/>
                 <StackPanel x:Name="Sp_IncreaseDecreaseBtns" Orientation="Horizontal" Background="Transparent" HorizontalAlignment="Center">
-                    <Button x:Name="Btn_IncreaseTime" Width="80" Height="40" Style="{StaticResource MyButtons}" Content="Time +" FontSize="20" 
+                    <Button x:Name="Btn_IncreaseTime" Width="80" Height="40" Style="{StaticResource MyButtons}" Content="Time +" 
                             Margin="0, 0, 15, 0" Template="{StaticResource NoMouseOverButtonTemplate}" Click="Btn_IncreaseTime_Click"
                             MouseEnter="Btn_IncreaseTime_MouseEnter" MouseLeave="Btn_IncreaseTime_MouseLeave"/>
-                    <Button x:Name="Btn_DecreaseTime" Width="80" Height="40" Style="{StaticResource MyButtons}" Content="Time -" FontSize="20"
+                    <Button x:Name="Btn_DecreaseTime" Width="80" Height="40" Style="{StaticResource MyButtons}" Content="Time -"
                             Template="{StaticResource NoMouseOverButtonTemplate}" Click="Btn_DecreaseTime_Click"
                             MouseEnter="Btn_DecreaseTime_MouseEnter" MouseLeave="Btn_DecreaseTime_MouseLeave"/>
                 </StackPanel>
             </StackPanel>
 
-            <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="2" Content="[ X ]" FontSize="22" Click="Btn_StartReminder_Click"
-                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource RemindMeBtn}"
-                    MouseEnter="Btn_StartReminder_MouseEnter" MouseLeave="Btn_StartReminder_MouseLeave"/>
+            <Button x:Name="Btn_StartReminder" Grid.Column="0" Grid.Row="2" Click="Btn_StartReminder_Click"
+                    Template="{StaticResource NoMouseOverButtonTemplate}" Style="{StaticResource MyButtons}" Width="100" Height="100"
+                    MouseEnter="Btn_StartReminder_MouseEnter" MouseLeave="Btn_StartReminder_MouseLeave">
+                <TextBlock x:Name="Tbl_ReminderTimer" Text="Start&#x0a;The&#x0a;Timer" TextAlignment="Center" TextWrapping="Wrap"/> <!-- Textblock im Button für textalignment=center -->
+            </Button>
 
-            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="#0F0000" FontFamily="{StaticResource BradleyHandITC}" FontSize="26"
-                     Foreground="DarkGoldenrod" Padding="10" TextWrapping="Wrap" Cursor="Pen" BorderBrush="DarkGoldenrod" 
-                     Effect="{StaticResource ButtonShadows}"/>
+            <TextBox x:Name="ReminderText" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="#0F0000" FontFamily="{StaticResource BradleyHandITC}"
+                     Foreground="DarkGoldenrod" Padding="5" TextWrapping="Wrap" Cursor="Pen" BorderBrush="DarkGoldenrod" FontSize="30"
+                     Effect="{StaticResource TextboxShadows}" FontWeight="Bold"/>
         </Grid>
 
         <Button x:Name="Btn_Quit" Grid.Column="1" Grid.Row="2" Click="Btn_Quit_Click" Template="{StaticResource NoMouseOverButtonTemplate}"
