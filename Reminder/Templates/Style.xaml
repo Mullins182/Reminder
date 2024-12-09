@@ -2,33 +2,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <DropShadowEffect x:Key="ButtonShadows" Color="Gold" BlurRadius="13" Direction="300" Opacity="0.55" RenderingBias="Quality" ShadowDepth="10"/>
-    <DropShadowEffect x:Key="TextboxShadows" Color="Goldenrod" BlurRadius="11" Direction="300" Opacity="0.45" RenderingBias="Quality" ShadowDepth="20"/>
-    <DropShadowEffect x:Key="StandardShadows" Color="Black" BlurRadius="10" Direction="300" Opacity="0.75" RenderingBias="Quality" ShadowDepth="20"/>
+    <DropShadowEffect x:Key="ButtonShadowRed" Color="Red" BlurRadius="13" Direction="300" Opacity="0.55" RenderingBias="Quality" ShadowDepth="10"/>
+    <DropShadowEffect x:Key="TextboxShadows" Color="Gold" BlurRadius="13" Direction="300" Opacity="0.55" RenderingBias="Quality" ShadowDepth="10"/>
+    <DropShadowEffect x:Key="TextboxShadowsOnMouseOver" Color="Gold" BlurRadius="13" Direction="300" Opacity="0.75" RenderingBias="Quality" ShadowDepth="10"/>
+    <DropShadowEffect x:Key="NotifyWindowShadow" Color="Black" BlurRadius="11" Direction="300" Opacity="0.85" RenderingBias="Quality" ShadowDepth="20"/>
+    <DropShadowEffect x:Key="ButtonShadowsOnMouseOver" Color="GreenYellow" BlurRadius="13" Direction="300" Opacity="0.55" RenderingBias="Quality" ShadowDepth="10"/>
 
     <Style x:Key="MyButtons" TargetType="Button">
         <Setter Property="Effect" Value="{StaticResource ButtonShadows}"/>
         <Setter Property="Height" Value="60"/>
         <Setter Property="Width" Value="230"/>
         <Setter Property="FontFamily" Value="{StaticResource BradleyHandITC}"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="FontSize" Value="43"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="23"/>
         <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="BorderThickness" Value="1,1,2,2"/>
         <Setter Property="Foreground" Value="Goldenrod"/>
         <Setter Property="Background" Value="Black"/>
-    </Style>
-
-    <Style x:Key="RemindMeBtn" TargetType="Button">
-        <Setter Property="Effect" Value="{StaticResource ButtonShadows}"/>
-        <Setter Property="Height" Value="95"/>
-        <Setter Property="Width" Value="95"/>
-        <Setter Property="FontFamily" Value="{StaticResource BradleyHandITC}"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="FontSize" Value="30"/>
-        <Setter Property="BorderBrush" Value="DarkGoldenrod"/>
-        <Setter Property="BorderThickness" Value="1,1,2,2"/>
-        <Setter Property="Foreground" Value="Goldenrod"/>
-        <Setter Property="Background" Value="#10FF0000"/>
     </Style>
 
     <!-- Control Template Override für Buttons um Highlighting bei Mouseover zu verhindern !-->
