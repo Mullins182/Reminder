@@ -13,17 +13,23 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Windows.UI.Composition;
 
 namespace Reminder
 {
     public partial class AlertWindow : Window
     {
+        private readonly DispatcherTimer AttentionBordersTimer = new();
         private readonly MediaPlayer openBox = new();
         private readonly MediaPlayer notify = new();
         private readonly DoubleAnimation TextboxAnimation = new();
         private readonly DoubleAnimation Btn_CloseMessageAnimation = new();
-        private readonly int animationTimerMsec = 650; // Notify Window Animation
+        private readonly int animationTimerMsec = 650; // Notify Window Animation Duration
+        private readonly int messageBoxBorderAnim = 30; // Notify Window and Close Btn Border Blinking interval
+        private readonly int timerDelayFrom = 2;
+        private readonly int timerDelayTo = 7;
+        private int attentionBordersTimerInterval = new Random().Next(2, 7);
 
         public AlertWindow(string notificationMsg)
         {
@@ -36,7 +42,11 @@ namespace Reminder
             openBox.Open(new Uri("sounds/raiseUp.mp3", UriKind.Relative));
             notify.Open(new Uri("sounds/notify.mp3", UriKind.Relative));
 
+            AttentionBordersTimer.Interval = TimeSpan.FromMinutes(attentionBordersTimerInterval);
+            AttentionBordersTimer.Tick += AttentionBordersTimer_Tick;
+
             CloseMessage.Opacity = 0.00;
+            CloseMessage.BorderThickness = new Thickness(1, 0, 1, 1); 
 
             TextboxAnimation.Duration = TimeSpan.FromMilliseconds(animationTimerMsec);
             TextboxAnimation.From = 0;
@@ -56,8 +66,17 @@ namespace Reminder
             await StartTextboxAnimation();
             MessageBox.Text = msg;
             CloseMessage.BeginAnimation(OpacityProperty, Btn_CloseMessageAnimation);
+            MessageBoxBorderAnim();
             await PlayNotifySound();
             await PlayNotifySound();
+            AttentionBordersTimer.Start();
+        }
+
+        private async void AttentionBordersTimer_Tick(object? sender, EventArgs e)
+        {
+            await MessageBoxBorderAnim();
+
+            attentionBordersTimerInterval = new Random().Next(timerDelayFrom, timerDelayTo);
         }
 
         private async Task<bool> PlayNotifySound()
@@ -74,6 +93,20 @@ namespace Reminder
             openBox.Position = TimeSpan.Zero;
             openBox.Play();
             await Task.Delay(animationTimerMsec);
+            return true;
+        }
+
+        private async Task<bool> MessageBoxBorderAnim()
+        {
+            for (int i = 20; i > 0; i--)
+            {
+                MessageBox.BorderBrush = new SolidColorBrush(Colors.YellowGreen);
+                CloseMessage.BorderBrush = new SolidColorBrush(Colors.YellowGreen);
+                await Task.Delay(messageBoxBorderAnim);
+                MessageBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                CloseMessage.BorderBrush = new SolidColorBrush(Colors.Black);
+                await Task.Delay(messageBoxBorderAnim);
+            }
             return true;
         }
 
