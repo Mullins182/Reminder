@@ -21,6 +21,7 @@ namespace Reminder
     public partial class AlertWindow : Window
     {
         private readonly DispatcherTimer AttentionBordersTimer = new();
+        public static event EventHandler? BtnClick;
         private readonly MediaPlayer openBox = new();
         private readonly MediaPlayer notify = new();
         private readonly DoubleAnimation TextboxAnimation = new();
@@ -117,6 +118,7 @@ namespace Reminder
 
         private void CloseMessage_Click(object sender, RoutedEventArgs e)
         {
+            BtnClick?.Invoke(this, e);
             this.Close();
         }
 

@@ -19,8 +19,8 @@ namespace Reminder
     {
 
         private readonly DispatcherTimer Timer = new();
-        private DoubleAnimation ReminderTextboxAnimation = new();
-        private DoubleAnimation ReminderTextboxAnimationMouseOver = new();
+        private readonly DoubleAnimation ReminderTextboxAnimation = new();
+        private readonly DoubleAnimation ReminderTextboxAnimationMouseOver = new();
         private readonly MediaPlayer buttons = new();
         private readonly MediaPlayer startTimer = new();
         private static readonly string stdReminderText = "Enter Your Notification Message !";
@@ -28,8 +28,8 @@ namespace Reminder
         private bool timerRunning = false;
         private bool soundsPlayed = true;
         private string notificationText = "";
-        private string btn_startReminderContentStd = "Start\nTimer";
-        private string btn_startReminderContentRunning = "Timer\nRunning";
+        private readonly string btn_startReminderContentStd = "Start\nTimer";
+        private readonly string btn_startReminderContentRunning = "Timer\nRunning";
         private readonly string[] tb_setTimeText = ["Notify me after\n> ", " <\nMinutes"];
 
 
@@ -42,6 +42,7 @@ namespace Reminder
         public void Initialize()
         {
             this.GotFocus += MainWindow_GotFocus;
+            AlertWindow.BtnClick += AlertWindow_BtnClick;
             ReminderText.MouseLeave += ReminderText_MouseLeave;
             ReminderText.MouseEnter += ReminderText_MouseEnter;
 
@@ -69,6 +70,12 @@ namespace Reminder
 
             Timer.Interval = TimeSpan.FromMinutes(1);
             Timer.Tick += Notification_Tick;
+        }
+
+        private void AlertWindow_BtnClick(object? sender, EventArgs e)
+        {
+            buttons.Position = TimeSpan.Zero;
+            buttons.Play();
         }
 
         private void Buttons_MediaEnded(object? sender, EventArgs e)
