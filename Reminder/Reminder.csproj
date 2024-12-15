@@ -12,8 +12,10 @@
   <ItemGroup>
     <None Remove="Fonts\Bradley Hand ITC.ttf" />
     <None Remove="Fonts\Curlz MT.ttf" />
+    <None Remove="sounds\button_click.mp3" />
     <None Remove="sounds\notify.mp3" />
     <None Remove="sounds\raiseUp.mp3" />
+    <None Remove="sounds\start_action.mp3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +23,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="sounds\button_click.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="sounds\notify.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="sounds\raiseUp.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sounds\start_action.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

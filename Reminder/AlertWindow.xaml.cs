@@ -27,9 +27,8 @@ namespace Reminder
         private readonly DoubleAnimation Btn_CloseMessageAnimation = new();
         private readonly int animationTimerMsec = 650; // Notify Window Animation Duration
         private readonly int messageBoxBorderAnim = 30; // Notify Window and Close Btn Border Blinking interval
-        private readonly int timerDelayFrom = 2;
-        private readonly int timerDelayTo = 7;
-        private int attentionBordersTimerInterval = new Random().Next(2, 7);
+        private readonly int timerDelayFrom = 5; // DispatcherTimer Minute Interval Random Value
+        private readonly int timerDelayTo = 15;
 
         public AlertWindow(string notificationMsg)
         {
@@ -39,14 +38,15 @@ namespace Reminder
 
         private async void Initialize(string msg)
         {
+            this.Topmost = true;
             openBox.Open(new Uri("sounds/raiseUp.mp3", UriKind.Relative));
             notify.Open(new Uri("sounds/notify.mp3", UriKind.Relative));
 
-            AttentionBordersTimer.Interval = TimeSpan.FromMinutes(attentionBordersTimerInterval);
+            AttentionBordersTimer.Interval = TimeSpan.FromMinutes(new Random().Next(timerDelayFrom, timerDelayTo + 1));
             AttentionBordersTimer.Tick += AttentionBordersTimer_Tick;
 
             CloseMessage.Opacity = 0.00;
-            CloseMessage.BorderThickness = new Thickness(1, 0, 1, 1); 
+            CloseMessage.BorderThickness = new Thickness(1.75, 0, 1.75, 1.75); 
 
             TextboxAnimation.Duration = TimeSpan.FromMilliseconds(animationTimerMsec);
             TextboxAnimation.From = 0;
@@ -61,12 +61,13 @@ namespace Reminder
             MessageBox.TextAlignment = TextAlignment.Center;
             MessageBox.VerticalContentAlignment = VerticalAlignment.Center;
             MessageBox.AcceptsReturn = true;
-            this.Topmost = true;
 
             await StartTextboxAnimation();
             MessageBox.Text = msg;
             CloseMessage.BeginAnimation(OpacityProperty, Btn_CloseMessageAnimation);
+#pragma warning disable CS4014 // Da auf diesen Aufruf nicht gewartet wird, wird die Ausführung der aktuellen Methode vor Abschluss des Aufrufs fortgesetzt.
             MessageBoxBorderAnim();
+#pragma warning restore CS4014 // Da auf diesen Aufruf nicht gewartet wird, wird die Ausführung der aktuellen Methode vor Abschluss des Aufrufs fortgesetzt.
             await PlayNotifySound();
             await PlayNotifySound();
             AttentionBordersTimer.Start();
@@ -75,8 +76,7 @@ namespace Reminder
         private async void AttentionBordersTimer_Tick(object? sender, EventArgs e)
         {
             await MessageBoxBorderAnim();
-
-            attentionBordersTimerInterval = new Random().Next(timerDelayFrom, timerDelayTo);
+            AttentionBordersTimer.Interval = TimeSpan.FromMinutes(new Random().Next(timerDelayFrom, timerDelayTo + 1));
         }
 
         private async Task<bool> PlayNotifySound()
@@ -98,15 +98,20 @@ namespace Reminder
 
         private async Task<bool> MessageBoxBorderAnim()
         {
-            for (int i = 20; i > 0; i--)
+            MessageBox.BorderThickness = new Thickness(1.75, 1.75, 1.75, 1.75);
+
+            for (int i = 25; i > 0; i--)
             {
-                MessageBox.BorderBrush = new SolidColorBrush(Colors.YellowGreen);
+                MessageBox.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
                 CloseMessage.BorderBrush = new SolidColorBrush(Colors.YellowGreen);
                 await Task.Delay(messageBoxBorderAnim);
                 MessageBox.BorderBrush = new SolidColorBrush(Colors.Red);
-                CloseMessage.BorderBrush = new SolidColorBrush(Colors.Black);
+                CloseMessage.BorderBrush = new SolidColorBrush(Colors.Red);
                 await Task.Delay(messageBoxBorderAnim);
             }
+
+            MessageBox.BorderThickness = new Thickness(0.65, 0.65, 0.65, 0.65);
+            CloseMessage.BorderBrush = new SolidColorBrush(Colors.Black);
             return true;
         }
 

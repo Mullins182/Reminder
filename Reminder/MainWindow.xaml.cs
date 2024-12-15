@@ -21,9 +21,12 @@ namespace Reminder
         private readonly DispatcherTimer Timer = new();
         private DoubleAnimation ReminderTextboxAnimation = new();
         private DoubleAnimation ReminderTextboxAnimationMouseOver = new();
+        private readonly MediaPlayer buttons = new();
+        private readonly MediaPlayer startTimer = new();
         private static readonly string stdReminderText = "Enter Your Notification Message !";
         private int setTimerValue = 1;
         private bool timerRunning = false;
+        private bool soundsPlayed = true;
         private string notificationText = "";
         private string btn_startReminderContentStd = "Start\nTimer";
         private string btn_startReminderContentRunning = "Timer\nRunning";
@@ -41,6 +44,10 @@ namespace Reminder
             this.GotFocus += MainWindow_GotFocus;
             ReminderText.MouseLeave += ReminderText_MouseLeave;
             ReminderText.MouseEnter += ReminderText_MouseEnter;
+
+            buttons.Open(new Uri("sounds/button_click.mp3", UriKind.Relative));
+            buttons.MediaEnded += Buttons_MediaEnded;
+            startTimer.Open(new Uri("sounds/start_action.mp3", UriKind.Relative));
 
             ReminderTextboxAnimation.From = 0.35;
             ReminderTextboxAnimation.To = 0.55;
@@ -62,6 +69,16 @@ namespace Reminder
 
             Timer.Interval = TimeSpan.FromMinutes(1);
             Timer.Tick += Notification_Tick;
+        }
+
+        private void Buttons_MediaEnded(object? sender, EventArgs e)
+        {
+            soundsPlayed = true;
+        }
+
+        private async Task WaitForSoundsPlayed()
+        {
+            while (!soundsPlayed) { await Task.Delay(10); }
         }
 
         private void UpdateShowSelectedTimeTextbox()
@@ -105,9 +122,8 @@ namespace Reminder
             Btn_StartReminder.BorderBrush = new SolidColorBrush(Colors.DarkGoldenrod);
             Btn_StartReminder.Effect = (DropShadowEffect)Resources["ButtonShadows"];
 
-            timerRunning = false;
-
             Timer.Stop();
+            timerRunning = false;
         }
 
         private bool CheckReminderText()
@@ -116,8 +132,13 @@ namespace Reminder
         }
 
         // Button/Slider Eventhandler
-        private void Btn_Quit_Click(object sender, RoutedEventArgs e)
+        private async void Btn_Quit_Click(object sender, RoutedEventArgs e)
         {
+            soundsPlayed = false;
+            buttons.Position = TimeSpan.Zero;
+            buttons.Play();
+
+            await WaitForSoundsPlayed();            
             Application.Current.Shutdown();
         }
 
@@ -128,6 +149,8 @@ namespace Reminder
                 Timer.Interval = TimeSpan.FromMinutes(setTimerValue);
                 Timer.Start();
                 TimerStarted();
+                startTimer.Position = TimeSpan.Zero;
+                startTimer.Play();
             }
         }
 
@@ -135,6 +158,8 @@ namespace Reminder
         {
             ReminderText.Clear();
             ReminderText.Text = stdReminderText;
+            buttons.Position = TimeSpan.Zero;
+            buttons.Play();
         }
 
         private void Sld_SetTime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -148,6 +173,8 @@ namespace Reminder
             setTimerValue = setTimerValue < 5 ? setTimerValue = 5 : setTimerValue += 5;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
             UpdateShowSelectedTimeTextbox();
+            buttons.Position = TimeSpan.Zero;
+            buttons.Play();
         }
 
         private void Btn_DecreaseTime_Click(object sender, RoutedEventArgs e)
@@ -155,6 +182,8 @@ namespace Reminder
             setTimerValue = setTimerValue > 5 ? setTimerValue -= 5 : setTimerValue <= 5 ? 1 : 30;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
             UpdateShowSelectedTimeTextbox();
+            buttons.Position = TimeSpan.Zero;
+            buttons.Play();
         }
 
         // Mouse Enter/Leave Event Handler
