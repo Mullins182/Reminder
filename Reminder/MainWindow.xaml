@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Reminder"
         mc:Ignorable="d"
-        Title="Reminder beta v2.0 | by Mullins182" Height="900" Width="700" WindowStartupLocation="CenterScreen" WindowState="Normal" 
+        Title="Reminder | @Mullins182" Height="900" Width="700" WindowStartupLocation="CenterScreen" WindowState="Normal" 
         WindowStyle="SingleBorderWindow" Background="#22F5132C" AllowsTransparency="False">
     <Window.Resources>
         <ResourceDictionary>
@@ -29,6 +29,9 @@
         <Label x:Name="PrgLabel" Width="300px" Height="auto" Background="Transparent" Foreground="DarkGoldenrod" FontSize="60px"
                Grid.Column="1" Grid.Row="0" Content="REMINDER" HorizontalAlignment="Center" VerticalAlignment="Center"
                FontFamily="{StaticResource CurlzMT}"/>
+        <Label x:Name="PrgVersion" Width="110px" Height="40" Background="Transparent" Foreground="DarkGoldenrod" FontSize="28px"
+               Grid.Column="1" Grid.Row="0" Content="beta v2.6" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+               FontFamily="{StaticResource CurlzMT}" Margin="0, 0, 55, 10"/>
 
         <Grid x:Name="OptionsGrid" Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>

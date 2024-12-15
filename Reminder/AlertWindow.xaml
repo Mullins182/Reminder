@@ -26,10 +26,11 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="MessageBox" Background="#BB000000" FontFamily="{StaticResource BradleyHandITC}" FontSize="35" Foreground="Gold"
                  TextWrapping="Wrap" TextAlignment="Center" Padding="20" BorderBrush="Red" Grid.Column="1" Grid.Row="0" FontWeight="Normal"
-                 Cursor="Hand" BorderThickness="0.5" Effect="{StaticResource NotifyWindowShadow}"/>
+                 Cursor="Hand" BorderThickness="0.65" Effect="{StaticResource NotifyWindowShadow}"/>
         
         <Button x:Name="CloseMessage" Width="175" Height="50" Background="Black" Foreground="Red" Content="Close Message" FontSize="25px"
                 Grid.Column="1" Grid.Row="1" Click="CloseMessage_Click" Template="{StaticResource NoMouseOverButtonTemplate}"
-                Style="{StaticResource MyButtons}" VerticalAlignment="Top" MouseEnter="CloseMessage_MouseEnter" MouseLeave="CloseMessage_MouseLeave"/>
+                Style="{StaticResource MyButtons}" VerticalAlignment="Top" MouseEnter="CloseMessage_MouseEnter" MouseLeave="CloseMessage_MouseLeave"
+                BorderBrush="Black"/>
     </Grid>
 </Window>
