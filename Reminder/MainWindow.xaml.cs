@@ -28,6 +28,7 @@ namespace Reminder
         private bool timerRunning = false;
         private bool soundsPlayed = true;
         private string notificationText = "";
+        private readonly string prgVersion = "beta v2.6";
         private readonly string btn_startReminderContentStd = "Start\nTimer";
         private readonly string btn_startReminderContentRunning = "Timer\nRunning";
         private readonly string[] tb_setTimeText = ["Notify me after\n> ", " <\nMinutes"];
@@ -42,6 +43,7 @@ namespace Reminder
         public void Initialize()
         {
             this.GotFocus += MainWindow_GotFocus;
+            PrgVersion.Content = prgVersion;
             AlertWindow.BtnClick += AlertWindow_BtnClick;
             ReminderText.MouseLeave += ReminderText_MouseLeave;
             ReminderText.MouseEnter += ReminderText_MouseEnter;
@@ -85,7 +87,7 @@ namespace Reminder
 
         private async Task WaitForSoundsPlayed()
         {
-            while (!soundsPlayed) { await Task.Delay(10); }
+            while (!soundsPlayed) { await Task.Delay(25); }
         }
 
         private void UpdateShowSelectedTimeTextbox()

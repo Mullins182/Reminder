@@ -30,7 +30,7 @@
                Grid.Column="1" Grid.Row="0" Content="REMINDER" HorizontalAlignment="Center" VerticalAlignment="Center"
                FontFamily="{StaticResource CurlzMT}"/>
         <Label x:Name="PrgVersion" Width="110px" Height="40" Background="Transparent" Foreground="DarkGoldenrod" FontSize="28px"
-               Grid.Column="1" Grid.Row="0" Content="beta v2.6" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+               Grid.Column="1" Grid.Row="0" Content="xxxxx" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                FontFamily="{StaticResource CurlzMT}" Margin="0, 0, 55, 10"/>
 
         <Grid x:Name="OptionsGrid" Grid.Column="1" Grid.Row="1">
