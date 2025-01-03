@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Media;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,14 +22,14 @@ namespace Reminder
         private readonly DispatcherTimer Timer = new();
         private readonly DoubleAnimation ReminderTextboxAnimation = new();
         private readonly DoubleAnimation ReminderTextboxAnimationMouseOver = new();
-        private readonly MediaPlayer buttons = new();
-        private readonly MediaPlayer startTimer = new();
+        private readonly MediaPlayer soundeffect = new();
         private static readonly string stdReminderText = "Enter Your Notification Message !";
         private int setTimerValue = 1;
         private bool timerRunning = false;
-        private bool soundsPlayed = true;
         private string notificationText = "";
-        private readonly string prgVersion = "beta v2.6";
+        private readonly string prgVersion = "beta v2.8";
+        private readonly string button_snd_src = "sounds/button_click.mp3";
+        private readonly string start_timer_snd_src = "sounds/start_action.mp3";
         private readonly string btn_startReminderContentStd = "Start\nTimer";
         private readonly string btn_startReminderContentRunning = "Timer\nRunning";
         private readonly string[] tb_setTimeText = ["Notify me after\n> ", " <\nMinutes"];
@@ -45,12 +46,9 @@ namespace Reminder
             this.GotFocus += MainWindow_GotFocus;
             PrgVersion.Content = prgVersion;
             AlertWindow.BtnClick += AlertWindow_BtnClick;
+            soundeffect.MediaEnded += Soundeffect_MediaEnded;
             ReminderText.MouseLeave += ReminderText_MouseLeave;
             ReminderText.MouseEnter += ReminderText_MouseEnter;
-
-            buttons.Open(new Uri("sounds/button_click.mp3", UriKind.Relative));
-            buttons.MediaEnded += Buttons_MediaEnded;
-            startTimer.Open(new Uri("sounds/start_action.mp3", UriKind.Relative));
 
             ReminderTextboxAnimation.From = 0.35;
             ReminderTextboxAnimation.To = 0.55;
@@ -74,23 +72,18 @@ namespace Reminder
             Timer.Tick += Notification_Tick;
         }
 
+        private void Soundeffect_MediaEnded(object? sender, EventArgs e)
+        {
+            soundeffect.Close();
+        }
+
         private void AlertWindow_BtnClick(object? sender, EventArgs e)
         {
-            buttons.Position = TimeSpan.Zero;
-            buttons.Play();
+            PrepareSound(button_snd_src);
+            PlaySnd();
         }
 
-        private void Buttons_MediaEnded(object? sender, EventArgs e)
-        {
-            soundsPlayed = true;
-        }
-
-        private async Task WaitForSoundsPlayed()
-        {
-            while (!soundsPlayed) { await Task.Delay(25); }
-        }
-
-        private void UpdateShowSelectedTimeTextbox()
+        private void UpdateTimeInSetTimeTb()
         {
             Tb_SetTime.Text = tb_setTimeText[0] + setTimerValue + tb_setTimeText[1];
         }
@@ -111,6 +104,22 @@ namespace Reminder
                 Btn_StartReminder.BorderBrush = new SolidColorBrush(Colors.Red);
                 Btn_StartReminder.Effect = (DropShadowEffect)Resources["ButtonShadowRed"];
                 await Task.Delay(50);
+            }
+        }
+        private void PrepareSound(string soundFile)
+        {
+            soundeffect.Open(new Uri(soundFile, UriKind.Relative));
+        }
+
+        private void PlaySnd()
+        {
+            try
+            {
+                soundeffect.Play();
+            }
+            catch (Exception)
+            {
+                // Fehlerbehandlung hier
             }
         }
 
@@ -143,11 +152,11 @@ namespace Reminder
         // Button/Slider Eventhandler
         private async void Btn_Quit_Click(object sender, RoutedEventArgs e)
         {
-            soundsPlayed = false;
-            buttons.Position = TimeSpan.Zero;
-            buttons.Play();
+            PrepareSound(button_snd_src);
+            PlaySnd();
 
-            await WaitForSoundsPlayed();            
+            await Task.Delay(650);
+
             Application.Current.Shutdown();
         }
 
@@ -155,44 +164,48 @@ namespace Reminder
         {
             if (CheckReminderText() && !timerRunning)
             {
+                PrepareSound(start_timer_snd_src);
+                PlaySnd();
+
                 Timer.Interval = TimeSpan.FromMinutes(setTimerValue);
                 Timer.Start();
                 TimerStarted();
-                startTimer.Position = TimeSpan.Zero;
-                startTimer.Play();
             }
         }
 
         private void Btn_ClearBox_Click(object sender, RoutedEventArgs e)
         {
+            PrepareSound(button_snd_src);
+            PlaySnd();
+
             ReminderText.Clear();
             ReminderText.Text = stdReminderText;
-            buttons.Position = TimeSpan.Zero;
-            buttons.Play();
         }
 
         private void Sld_SetTime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             setTimerValue = (int)Sld_SetTime.Value;
-            UpdateShowSelectedTimeTextbox();
+            UpdateTimeInSetTimeTb();
         }
 
         private void Btn_IncreaseTime_Click(object sender, RoutedEventArgs e)
         {
+            PrepareSound(button_snd_src);
+            PlaySnd();
+
             setTimerValue = setTimerValue < 5 ? setTimerValue = 5 : setTimerValue += 5;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
-            UpdateShowSelectedTimeTextbox();
-            buttons.Position = TimeSpan.Zero;
-            buttons.Play();
+            UpdateTimeInSetTimeTb();
         }
 
         private void Btn_DecreaseTime_Click(object sender, RoutedEventArgs e)
         {
+            PrepareSound(button_snd_src);
+            PlaySnd();
+
             setTimerValue = setTimerValue > 5 ? setTimerValue -= 5 : setTimerValue <= 5 ? 1 : 30;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
-            UpdateShowSelectedTimeTextbox();
-            buttons.Position = TimeSpan.Zero;
-            buttons.Play();
+            UpdateTimeInSetTimeTb();
         }
 
         // Mouse Enter/Leave Event Handler
