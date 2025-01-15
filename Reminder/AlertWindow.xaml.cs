@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,8 +23,8 @@ namespace Reminder
     {
         private readonly DispatcherTimer AttentionBordersTimer = new();
         public static event EventHandler? BtnClick;
-        private readonly MediaPlayer openBox = new();
-        private readonly MediaPlayer notify = new();
+        private readonly string openBox_sndSrc = "pack://application:,,,/sounds/raiseUp.wav";
+        private readonly string notify_sndSrc = "pack://application:,,,/sounds/notify.wav";
         private readonly DoubleAnimation TextboxAnimation = new();
         private readonly DoubleAnimation Btn_CloseMessageAnimation = new();
         private readonly int animationTimerMsec = 650; // Notify Window Animation Duration
@@ -40,8 +41,6 @@ namespace Reminder
         private async void Initialize(string msg)
         {
             this.Topmost = true;
-            openBox.Open(new Uri("sounds/raiseUp.mp3", UriKind.Relative));
-            notify.Open(new Uri("sounds/notify.mp3", UriKind.Relative));
 
             AttentionBordersTimer.Interval = TimeSpan.FromMinutes(new Random().Next(timerDelayFrom, timerDelayTo + 1));
             AttentionBordersTimer.Tick += AttentionBordersTimer_Tick;
@@ -74,6 +73,30 @@ namespace Reminder
             AttentionBordersTimer.Start();
         }
 
+        private void PlaySnd(string soundFileUri)
+        {
+            try
+            {
+                // Lade die Ressource aus dem Assembly mit der WPF-Pack-URI-Syntax
+                var resourceInfo = Application.GetResourceStream(new Uri(soundFileUri, UriKind.Absolute));
+                if (resourceInfo != null)
+                {
+                    using var stream = resourceInfo.Stream;
+                    SoundPlayer soundPlayer = new(stream);
+                    soundPlayer.Play();
+                }
+                else
+                {
+                    MessageBox.AppendText($"\n\nSounddatei {soundFileUri} nicht gefunden.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.AppendText($"\n\nFehler beim Abspielen des Sounds: {ex.Message}");
+            }
+        }
+
+
         private async void AttentionBordersTimer_Tick(object? sender, EventArgs e)
         {
             await MessageBoxBorderAnim();
@@ -82,8 +105,7 @@ namespace Reminder
 
         private async Task<bool> PlayNotifySound()
         {
-            notify.Position = TimeSpan.Zero;
-            notify.Play();
+            PlaySnd(notify_sndSrc);
             await Task.Delay(4000);
             return true;
         }
@@ -91,9 +113,8 @@ namespace Reminder
         private async Task<bool> StartTextboxAnimation()
         {
             MessageBox.BeginAnimation(WidthProperty, TextboxAnimation);
-            openBox.Position = TimeSpan.Zero;
-            openBox.Play();
-            await Task.Delay(animationTimerMsec);
+            PlaySnd(openBox_sndSrc);
+            await Task.Delay(animationTimerMsec + 300);
             return true;
         }
 
