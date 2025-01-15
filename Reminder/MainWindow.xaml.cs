@@ -1,18 +1,10 @@
 ﻿using System.Media;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using Windows.UI.Notifications;
 
 namespace Reminder
 {
@@ -22,14 +14,13 @@ namespace Reminder
         private readonly DispatcherTimer Timer = new();
         private readonly DoubleAnimation ReminderTextboxAnimation = new();
         private readonly DoubleAnimation ReminderTextboxAnimationMouseOver = new();
-        private readonly MediaPlayer soundeffect = new();
         private static readonly string stdReminderText = "Enter Your Notification Message !";
         private int setTimerValue = 1;
         private bool timerRunning = false;
         private string notificationText = "";
-        private readonly string prgVersion = "beta v2.8";
-        private readonly string button_snd_src = "sounds/button_click.mp3";
-        private readonly string start_timer_snd_src = "sounds/start_action.mp3";
+        private readonly string prgVersion = "v1.0";
+        private readonly string button_snd_src = "pack://application:,,,/sounds/button_click.wav";
+        private readonly string startTimer_snd_src = "pack://application:,,,/sounds/start_action.wav";
         private readonly string btn_startReminderContentStd = "Start\nTimer";
         private readonly string btn_startReminderContentRunning = "Timer\nRunning";
         private readonly string[] tb_setTimeText = ["Notify me after\n> ", " <\nMinutes"];
@@ -46,7 +37,6 @@ namespace Reminder
             this.GotFocus += MainWindow_GotFocus;
             PrgVersion.Content = prgVersion;
             AlertWindow.BtnClick += AlertWindow_BtnClick;
-            soundeffect.MediaEnded += Soundeffect_MediaEnded;
             ReminderText.MouseLeave += ReminderText_MouseLeave;
             ReminderText.MouseEnter += ReminderText_MouseEnter;
 
@@ -72,17 +62,6 @@ namespace Reminder
             Timer.Tick += Notification_Tick;
         }
 
-        private void Soundeffect_MediaEnded(object? sender, EventArgs e)
-        {
-            soundeffect.Close();
-        }
-
-        private void AlertWindow_BtnClick(object? sender, EventArgs e)
-        {
-            PrepareSound(button_snd_src);
-            PlaySnd();
-        }
-
         private void UpdateTimeInSetTimeTb()
         {
             Tb_SetTime.Text = tb_setTimeText[0] + setTimerValue + tb_setTimeText[1];
@@ -106,20 +85,26 @@ namespace Reminder
                 await Task.Delay(50);
             }
         }
-        private void PrepareSound(string soundFile)
-        {
-            soundeffect.Open(new Uri(soundFile, UriKind.Relative));
-        }
-
-        private void PlaySnd()
+        private void PlaySnd(string soundFileUri)
         {
             try
             {
-                soundeffect.Play();
+                // Lade die Ressource aus dem Assembly mit der WPF-Pack-URI-Syntax
+                var resourceInfo = Application.GetResourceStream(new Uri(soundFileUri, UriKind.Absolute));
+                if (resourceInfo != null)
+                {
+                    using var stream = resourceInfo.Stream;
+                    SoundPlayer soundPlayer = new(stream);
+                    soundPlayer.Play();
+                }
+                else
+                {
+                    MessageBox.Show($"Sounddatei {soundFileUri} nicht gefunden.");
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Fehlerbehandlung hier
+                MessageBox.Show($"Fehler beim Abspielen des Sounds: {ex.Message}");
             }
         }
 
@@ -150,10 +135,14 @@ namespace Reminder
         }
 
         // Button/Slider Eventhandler
+        private void AlertWindow_BtnClick(object? sender, EventArgs e)
+        {
+            PlaySnd(button_snd_src);
+        }
+
         private async void Btn_Quit_Click(object sender, RoutedEventArgs e)
         {
-            PrepareSound(button_snd_src);
-            PlaySnd();
+            PlaySnd(button_snd_src);
 
             await Task.Delay(650);
 
@@ -164,8 +153,7 @@ namespace Reminder
         {
             if (CheckReminderText() && !timerRunning)
             {
-                PrepareSound(start_timer_snd_src);
-                PlaySnd();
+                PlaySnd(startTimer_snd_src);
 
                 Timer.Interval = TimeSpan.FromMinutes(setTimerValue);
                 Timer.Start();
@@ -175,8 +163,7 @@ namespace Reminder
 
         private void Btn_ClearBox_Click(object sender, RoutedEventArgs e)
         {
-            PrepareSound(button_snd_src);
-            PlaySnd();
+            PlaySnd(button_snd_src);
 
             ReminderText.Clear();
             ReminderText.Text = stdReminderText;
@@ -190,8 +177,7 @@ namespace Reminder
 
         private void Btn_IncreaseTime_Click(object sender, RoutedEventArgs e)
         {
-            PrepareSound(button_snd_src);
-            PlaySnd();
+            PlaySnd(button_snd_src);
 
             setTimerValue = setTimerValue < 5 ? setTimerValue = 5 : setTimerValue += 5;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
@@ -200,8 +186,7 @@ namespace Reminder
 
         private void Btn_DecreaseTime_Click(object sender, RoutedEventArgs e)
         {
-            PrepareSound(button_snd_src);
-            PlaySnd();
+            PlaySnd(button_snd_src);
 
             setTimerValue = setTimerValue > 5 ? setTimerValue -= 5 : setTimerValue <= 5 ? 1 : 30;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
