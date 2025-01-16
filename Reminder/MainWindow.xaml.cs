@@ -1,9 +1,11 @@
-﻿using System.Media;
+﻿using System.IO;
+using System.Media;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
+using System.Windows.Resources;
 using System.Windows.Threading;
 
 namespace Reminder
@@ -12,13 +14,17 @@ namespace Reminder
     {
 
         private readonly DispatcherTimer Timer = new();
+        private readonly SoundPlayer _button_click = new();
+        private readonly SoundPlayer _start_action = new();
+        private Stream? _stream1;
+        private Stream? _stream2;
         private readonly DoubleAnimation ReminderTextboxAnimation = new();
         private readonly DoubleAnimation ReminderTextboxAnimationMouseOver = new();
         private static readonly string stdReminderText = "Enter Your Notification Message !";
         private int setTimerValue = 1;
         private bool timerRunning = false;
         private string notificationText = "";
-        private readonly string prgVersion = "v1.0";
+        private readonly string prgVersion = "v1.1";
         private readonly string button_snd_src = "pack://application:,,,/sounds/button_click.wav";
         private readonly string startTimer_snd_src = "pack://application:,,,/sounds/start_action.wav";
         private readonly string btn_startReminderContentStd = "Start\nTimer";
@@ -39,6 +45,14 @@ namespace Reminder
             AlertWindow.BtnClick += AlertWindow_BtnClick;
             ReminderText.MouseLeave += ReminderText_MouseLeave;
             ReminderText.MouseEnter += ReminderText_MouseEnter;
+
+            // Lade die Ressource aus dem Assembly mit der WPF-Pack-URI-Syntax
+            var resourceInfo_button_click = Application.GetResourceStream(new Uri(button_snd_src, UriKind.Absolute));
+            var resourceInfo_start_action = Application.GetResourceStream(new Uri(startTimer_snd_src, UriKind.Absolute));
+            _stream1 = resourceInfo_button_click.Stream;
+            _stream2 = resourceInfo_start_action.Stream;
+            _button_click.Stream = _stream1;
+            _start_action.Stream = _stream2;
 
             ReminderTextboxAnimation.From = 0.35;
             ReminderTextboxAnimation.To = 0.55;
@@ -85,28 +99,6 @@ namespace Reminder
                 await Task.Delay(50);
             }
         }
-        private void PlaySnd(string soundFileUri)
-        {
-            try
-            {
-                // Lade die Ressource aus dem Assembly mit der WPF-Pack-URI-Syntax
-                var resourceInfo = Application.GetResourceStream(new Uri(soundFileUri, UriKind.Absolute));
-                if (resourceInfo != null)
-                {
-                    using var stream = resourceInfo.Stream;
-                    SoundPlayer soundPlayer = new(stream);
-                    soundPlayer.Play();
-                }
-                else
-                {
-                    MessageBox.Show($"Sounddatei {soundFileUri} nicht gefunden.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Fehler beim Abspielen des Sounds: {ex.Message}");
-            }
-        }
 
         private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -137,14 +129,20 @@ namespace Reminder
         // Button/Slider Eventhandler
         private void AlertWindow_BtnClick(object? sender, EventArgs e)
         {
-            PlaySnd(button_snd_src);
+            _button_click.Play();
         }
 
         private async void Btn_Quit_Click(object sender, RoutedEventArgs e)
         {
-            PlaySnd(button_snd_src);
+            _button_click.Play();
 
             await Task.Delay(650);
+
+            // Streams schließen
+            _stream1?.Dispose();
+            _stream2?.Dispose();
+            _button_click?.Dispose();
+            _start_action?.Dispose();
 
             Application.Current.Shutdown();
         }
@@ -153,7 +151,7 @@ namespace Reminder
         {
             if (CheckReminderText() && !timerRunning)
             {
-                PlaySnd(startTimer_snd_src);
+                _start_action.Play();
 
                 Timer.Interval = TimeSpan.FromMinutes(setTimerValue);
                 Timer.Start();
@@ -163,7 +161,7 @@ namespace Reminder
 
         private void Btn_ClearBox_Click(object sender, RoutedEventArgs e)
         {
-            PlaySnd(button_snd_src);
+            _button_click.Play();
 
             ReminderText.Clear();
             ReminderText.Text = stdReminderText;
@@ -177,7 +175,7 @@ namespace Reminder
 
         private void Btn_IncreaseTime_Click(object sender, RoutedEventArgs e)
         {
-            PlaySnd(button_snd_src);
+            _button_click.Play();
 
             setTimerValue = setTimerValue < 5 ? setTimerValue = 5 : setTimerValue += 5;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
@@ -186,7 +184,7 @@ namespace Reminder
 
         private void Btn_DecreaseTime_Click(object sender, RoutedEventArgs e)
         {
-            PlaySnd(button_snd_src);
+            _button_click.Play();
 
             setTimerValue = setTimerValue > 5 ? setTimerValue -= 5 : setTimerValue <= 5 ? 1 : 30;
             Sld_SetTime.Value = setTimerValue < 60 ? setTimerValue : 60;
