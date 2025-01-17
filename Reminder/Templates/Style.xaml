@@ -16,7 +16,7 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="23"/>
         <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="BorderThickness" Value="1,1,2,2"/>
+        <Setter Property="BorderThickness" Value="0, 0, 0, 0"/>
         <Setter Property="Foreground" Value="Goldenrod"/>
         <Setter Property="Background" Value="Black"/>
     </Style>

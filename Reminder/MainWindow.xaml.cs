@@ -24,7 +24,7 @@ namespace Reminder
         private int setTimerValue = 1;
         private bool timerRunning = false;
         private string notificationText = "";
-        private readonly string prgVersion = "v1.1";
+        private readonly string prgVersion = "v1.3";
         private readonly string button_snd_src = "pack://application:,,,/sounds/button_click.wav";
         private readonly string startTimer_snd_src = "pack://application:,,,/sounds/start_action.wav";
         private readonly string btn_startReminderContentStd = "Start\nTimer";

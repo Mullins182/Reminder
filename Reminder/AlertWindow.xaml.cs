@@ -34,8 +34,8 @@ namespace Reminder
         private readonly DoubleAnimation Btn_CloseMessageAnimation = new();
         private readonly int animationTimerMsec = 650; // Notify Window Animation Duration
         private readonly int messageBoxBorderAnim = 30; // Notify Window and Close Btn Border Blinking interval
-        private readonly int timerDelayFrom = 5; // DispatcherTimer Minute Interval Random Value
-        private readonly int timerDelayTo = 15;
+        private readonly int timerDelayFrom = 1; // DispatcherTimer Minute Interval Random Value
+        private readonly int timerDelayTo = 3;
 
         public AlertWindow(string notificationMsg)
         {
@@ -103,7 +103,7 @@ namespace Reminder
         {
             MessageBox.BeginAnimation(WidthProperty, TextboxAnimation);
             _raiseUp.Play();
-            await Task.Delay(animationTimerMsec + 185);
+            await Task.Delay(animationTimerMsec + 280);
             return true;
         }
 
@@ -111,7 +111,7 @@ namespace Reminder
         {
             MessageBox.BorderThickness = new Thickness(1.75, 1.75, 1.75, 1.75);
 
-            for (int i = 25; i > 0; i--)
+            for (int i = 70; i > 0; i--)
             {
                 MessageBox.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
                 CloseMessage.BorderBrush = new SolidColorBrush(Colors.YellowGreen);
